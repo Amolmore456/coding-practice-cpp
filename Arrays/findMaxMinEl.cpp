@@ -53,17 +53,49 @@ Pair findMaxMinEl(vector<int> &nums) {
 
 Pair getMinMax(vector<int> nums) {
     struct Pair minMax;
+    int i;
     int size = nums.size();
-    if(size == 1) {
+    
+
+    if(size%2 == 0) {
+        if(nums[0] > nums[1]) {
+            minMax.max = nums[0];
+            minMax.min = nums[1];
+        } else {
+            minMax.min = nums[0];
+            minMax.max = nums[1];
+        }
+        i=2;
+    } else {
         minMax.min = nums[0];
         minMax.max = nums[0];
-           
+        i=1;
     }
+
+    while (i < size-1) {
+        if(nums[i] >nums[i+1]) {
+            if(nums[i] > minMax.max) {
+                minMax.max = nums[i];
+            }
+            if(nums[i + 1] < minMax.min) {
+                minMax.min =  nums[i + 1];
+            }
+        } else {
+            if(nums[i + 1] > minMax.max) {
+                minMax.max = nums[i + 1]; 
+            }
+            if(nums[i] < minMax.min) {
+                minMax.min = nums[i]; 
+            }
+        }
+        i= i+2;
+    }
+    return minMax;
 }
 
 int main( ) {
-    vector<int> nums = {3};
-    struct Pair ans =  findMaxMinEl(nums);
+    vector<int> nums = {3,5, 4, 1, 9};
+    struct Pair ans =  getMinMax(nums);
     cout << "Min:" << ans.min <<  "   " << "Max:" << ans.max << endl;
 
     return 0;
